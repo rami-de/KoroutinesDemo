@@ -22,6 +22,7 @@ class MovieRepoMapper @Inject constructor() {
             dto.title ?: "",
             dto.posterPath ?: "",
             dto.voteAverage.toString(),
-            dto.releaseDate?.take(4) ?: "")
+            dto.releaseDate?.take(4) ?: "",
+            dto.id ?: 0)
     }
 }
