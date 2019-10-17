@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Module
 class UIModule {
 
-    val BASE_TMDB_IMAGES_URL = "https://image.tmdb.org/t/p/w185"
+    val BASE_TMDB_IMAGES_URL = "https://image.tmdb.org/t/p/w500"
 
     @Provides
     @Singleton

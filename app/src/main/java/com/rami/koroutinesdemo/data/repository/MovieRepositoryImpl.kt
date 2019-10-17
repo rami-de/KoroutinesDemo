@@ -12,7 +12,8 @@ class MovieRepositoryImpl(private val apiClient: ApiClient, private val mapper: 
         return mapper.mapToMovieList(response)
     }
 
-    override suspend fun getSingleMovie(): Movie {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun getSingleMovie(movieId: Int): Movie {
+        val response = apiClient.getSingleMovieById(movieId)
+        return mapper.mapToMovie(response)
     }
 }

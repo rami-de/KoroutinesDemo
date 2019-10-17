@@ -45,7 +45,7 @@ class MovieDetailActivity : AppCompatActivity() {
         title = findViewById(R.id.title)
         attributes = findViewById(R.id.attributes)
         description = findViewById(R.id.description)
-        rating = findViewById(R.id.description)
+        rating = findViewById(R.id.rating)
         loader = findViewById(R.id.loader)
         errorView = findViewById(R.id.error_view)
 
@@ -64,7 +64,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     fun onStateChanged(state: DetailScreenState) {
         when (state) {
-            DetailScreenState.Loading -> showLoader()
+            DetailScreenState.Loading -> hideViewsAndShowLoader()
             DetailScreenState.Error -> hideViewsAndShowError()
             is DetailScreenState.BigPosterAvailable -> showBigPoster(state.url)
             is DetailScreenState.SmallPosterAvailable -> showSmallPoster(state.url)
@@ -72,37 +72,60 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
-    fun showLoader() {
+    fun hideViewsAndShowLoader() {
+        hideViews()
         loader.visibility = VISIBLE
+        loader.playAnimation()
+    }
+
+    fun hideViewsAndShowError() {
+        hideViews()
+        showError()
     }
 
     fun showBigPoster(url: String) {
         picasso.load(url)
+            .fit()
+            .centerCrop()
             .into(bigPoster)
     }
 
     fun showSmallPoster(url: String) {
         picasso.load(url)
+            .fit()
+            .centerCrop()
             .into(smallPoster)
     }
 
     fun showMovieDetails(movie: DetailMovieItem) {
         loader.visibility = GONE
+        loader.pauseAnimation()
         attributes.text = getString(R.string.movie_attributes, movie.releaseYear, movie.runTime, movie.genres)
         title.text = movie.title
-        rating.text = movie.rating
+        rating.text = "${movie.rating}/10"
         description.text = movie.description
+        showViews()
     }
 
-    fun hideViewsAndShowError() {
-        loader.visibility = GONE
+    fun showViews() {
+        bigPoster.visibility = VISIBLE
+        smallPoster.visibility = VISIBLE
+        title.visibility = VISIBLE
+        attributes.visibility = VISIBLE
+        rating.visibility = VISIBLE
+        description.visibility = VISIBLE
+    }
+
+    fun hideViews() {
         bigPoster.visibility = GONE
         smallPoster.visibility = GONE
         title.visibility = GONE
         attributes.visibility = GONE
         rating.visibility = GONE
         description.visibility = GONE
+    }
 
+    fun showError() {
         errorView.visibility = VISIBLE
         errorView.playAnimation()
     }

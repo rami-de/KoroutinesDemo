@@ -5,6 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MovieListPresenter(private val interactor: MovieInteractor) {
 
@@ -25,11 +26,15 @@ class MovieListPresenter(private val interactor: MovieInteractor) {
         view?.hideMovies()
         view?.showLoader()
         scope.launch {
-            val movies = interactor.getPopularMovies()
-            if (movies.isNotEmpty()) {
-                view?.hideLoader()
-                view?.updateData(movies)
-                view?.showMovies()
+            try {
+                val movies = interactor.getPopularMovies()
+                if (movies.isNotEmpty()) {
+                    view?.hideLoader()
+                    view?.updateData(movies)
+                    view?.showMovies()
+                }
+            } catch (e: Exception) {
+                view?.showError()
             }
         }
     }

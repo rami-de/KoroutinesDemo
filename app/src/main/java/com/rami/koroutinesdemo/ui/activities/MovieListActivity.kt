@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
@@ -66,7 +65,6 @@ class MovieListActivity : AppCompatActivity(), MovieListView, MovieListNavigatio
 
     override fun onMovieItemPressed(movieId: Int) {
         presenter.onMovieItemClicked(movieId)
-        Toast.makeText(this, "Movie pressed: $movieId", Toast.LENGTH_SHORT).show()
     }
 
     override fun hideMovies() {
@@ -89,5 +87,8 @@ class MovieListActivity : AppCompatActivity(), MovieListView, MovieListNavigatio
 
     override fun enableListClicks() {
         adapter.isClickable = true
+    }
+
+    override fun showError() {
     }
 }

@@ -19,4 +19,6 @@ interface MovieListView {
     fun disableListClicks()
 
     fun enableListClicks()
+
+    fun showError()
 }

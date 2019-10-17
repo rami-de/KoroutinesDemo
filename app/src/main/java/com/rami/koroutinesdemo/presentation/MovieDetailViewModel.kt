@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.rami.koroutinesdemo.domain.interactors.MovieInteractor
 import com.rami.koroutinesdemo.ui.models.DetailMovieItem
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MovieDetailViewModel(private val interactor: MovieInteractor) : ViewModel() {
 
@@ -21,7 +22,18 @@ class MovieDetailViewModel(private val interactor: MovieInteractor) : ViewModel(
     fun loadMovieDetails() {
         viewModelScope.launch {
             setState(DetailScreenState.Loading)
-            interactor.getMovieById(movieId)
+            try {
+                val movie = interactor.getMovieById(movieId)
+                if (movie.bigPosterUrl.isNotEmpty()) {
+                    setState(DetailScreenState.BigPosterAvailable(movie.bigPosterUrl))
+                }
+                if (movie.smallPosterUrl.isNotEmpty()) {
+                    setState(DetailScreenState.SmallPosterAvailable(movie.smallPosterUrl))
+                }
+                setState(DetailScreenState.Ready(movie))
+            } catch (e: Exception) {
+                setState(DetailScreenState.Error)
+            }
         }
     }
 
