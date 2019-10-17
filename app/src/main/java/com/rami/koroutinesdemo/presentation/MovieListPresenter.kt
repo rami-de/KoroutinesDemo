@@ -17,6 +17,7 @@ class MovieListPresenter(private val interactor: MovieInteractor) {
     }
 
     fun onResumed() {
+        view?.enableListClicks()
         loadMovies()
     }
 

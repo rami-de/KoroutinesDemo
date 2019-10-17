@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">KoroutinesDemo</string>
     <string name="release_year">Release year: %1$s</string>
+    <string name="movie_attributes">%1$s   %2$s   %3$s</string>
 </resources>
