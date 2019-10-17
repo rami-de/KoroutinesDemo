@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rami.koroutinesdemo.R
 import com.rami.koroutinesdemo.ui.customviews.MovieCardView
-import com.rami.koroutinesdemo.ui.models.MovieItem
+import com.rami.koroutinesdemo.ui.models.SimpleMovieItem
 import javax.inject.Inject
 
 class MovieListAdapter @Inject constructor(): RecyclerView.Adapter<MovieListAdapter.MovieCardViewHolder>() {
 
-    var movies: List<MovieItem> = listOf(MovieItem(), MovieItem(), MovieItem())
+    var movies: List<SimpleMovieItem> = listOf(SimpleMovieItem(), SimpleMovieItem(), SimpleMovieItem())
 
-    fun updateItems(movies: List<MovieItem>) {
+    fun updateItems(movies: List<SimpleMovieItem>) {
         this.movies = movies
         notifyDataSetChanged()
     }
@@ -33,7 +33,7 @@ class MovieListAdapter @Inject constructor(): RecyclerView.Adapter<MovieListAdap
 
     inner class MovieCardViewHolder(private val card: MovieCardView) : RecyclerView.ViewHolder(card) {
 
-        fun bindItem(movie: MovieItem) {
+        fun bindItem(movie: SimpleMovieItem) {
             card.title.text = movie.title
             card.year.text = movie.releaseYear
             card.rating.text = movie.rating

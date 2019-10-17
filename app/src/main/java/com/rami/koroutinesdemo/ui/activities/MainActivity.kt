@@ -2,11 +2,16 @@ package com.rami.koroutinesdemo.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rami.koroutinesdemo.DemoApplication
 import com.rami.koroutinesdemo.R
+import com.rami.koroutinesdemo.data.repository.MovieRepository
 import com.rami.koroutinesdemo.ui.adapters.MovieListAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +20,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var adapter: MovieListAdapter
+
+    @Inject
+    lateinit var repository: MovieRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,5 +33,13 @@ class MainActivity : AppCompatActivity() {
         moviesRecycler = findViewById(R.id.movies_recycler)
         moviesRecycler.layoutManager = layoutManager
         moviesRecycler.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        GlobalScope.launch(Dispatchers.Main) {
+            val movies = repository.getPopularMovies()
+            Log.d("MainActivity", movies.toString())
+        }
     }
 }
