@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rami.koroutinesdemo.R
 import com.rami.koroutinesdemo.ui.customviews.MovieCardView
 import com.rami.koroutinesdemo.ui.models.SimpleMovieItem
+import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
-class MovieListAdapter @Inject constructor(): RecyclerView.Adapter<MovieListAdapter.MovieCardViewHolder>() {
+class MovieListAdapter @Inject constructor(private val picasso: Picasso): RecyclerView.Adapter<MovieListAdapter.MovieCardViewHolder>() {
 
-    var movies: List<SimpleMovieItem> = listOf(SimpleMovieItem(), SimpleMovieItem(), SimpleMovieItem())
+    var movies: List<SimpleMovieItem> = listOf()
 
     fun updateItems(movies: List<SimpleMovieItem>) {
         this.movies = movies
@@ -35,9 +36,11 @@ class MovieListAdapter @Inject constructor(): RecyclerView.Adapter<MovieListAdap
 
         fun bindItem(movie: SimpleMovieItem) {
             card.title.text = movie.title
-            card.year.text = movie.releaseYear
+            card.year.text = card.context.getString(R.string.release_year, movie.releaseYear)
             card.rating.text = movie.rating
-            // load image with Glide
+            picasso.load(movie.posterUrl)
+                .placeholder(R.drawable.ic_popcorn_svgrepo_com)
+                .into(card.poster)
         }
     }
 }
