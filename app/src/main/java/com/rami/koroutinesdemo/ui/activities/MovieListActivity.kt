@@ -49,6 +49,11 @@ class MovieListActivity : AppCompatActivity(), MovieListView, MovieListNavigatio
         presenter.onResumed()
     }
 
+    override fun onPause() {
+        presenter.onPaused()
+        super.onPause()
+    }
+
     override fun showLoader() {
         loader.visibility = VISIBLE
         loader.playAnimation()

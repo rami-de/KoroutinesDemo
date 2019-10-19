@@ -33,12 +33,12 @@ class MovieRepoMapper @Inject constructor() {
         if (dto == null) {
             throw Exception()
         }
-        var genreString = ""
+        val genresList = mutableListOf<String>()
         dto.genres?.forEach {
-            genreString += it.name
+            genresList.add(it.name ?: "")
         }
         Movie(dto.title ?: "", dto.id ?: 0, dto.backdropPath ?: "",
             dto.posterPath ?: "", dto.releaseDate?.take(4) ?: "Unknown year",
-            genreString, dto.overview ?: "", "${dto.voteAverage}", dto.runtime.toString())
+            genresList, dto.overview ?: "", "${dto.voteAverage}", dto.runtime.toString())
     }
 }

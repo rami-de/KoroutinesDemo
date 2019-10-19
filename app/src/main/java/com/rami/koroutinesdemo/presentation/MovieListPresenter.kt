@@ -39,6 +39,10 @@ class MovieListPresenter(private val interactor: MovieInteractor) {
         }
     }
 
+    fun onPaused() {
+        job.cancel()
+    }
+
     fun onMovieItemClicked(movieId: Int) {
         view?.disableListClicks()
         view?.navigateToMovieDetails(movieId)

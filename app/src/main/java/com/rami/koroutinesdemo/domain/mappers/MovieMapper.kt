@@ -24,6 +24,6 @@ class MovieMapper @Inject constructor() {
 
     suspend fun mapFullMovie(movie: Movie): DetailMovieItem = withContext(Dispatchers.Default) {
         DetailMovieItem(movie.title, movie.largePosterUrl, movie.smallPosterUrl, movie.runTime,
-            movie.rating, movie.genres, movie.releaseYear, movie.description)
+            movie.rating, movie.genres.joinToString(), movie.releaseYear, movie.description)
     }
 }
