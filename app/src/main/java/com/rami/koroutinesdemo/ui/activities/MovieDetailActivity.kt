@@ -126,6 +126,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     fun showError() {
+        loader.visibility = GONE
         errorView.visibility = VISIBLE
         errorView.playAnimation()
     }

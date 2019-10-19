@@ -122,6 +122,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_loop="false"
-        app:lottie_rawRes="@raw/movie_loading" />
+        app:lottie_rawRes="@raw/it_clown_error" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

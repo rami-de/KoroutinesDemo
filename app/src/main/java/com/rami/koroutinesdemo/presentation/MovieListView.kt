@@ -21,4 +21,6 @@ interface MovieListView {
     fun enableListClicks()
 
     fun showError()
+
+    fun hideError()
 }

@@ -29,6 +29,8 @@ class MovieListActivity : AppCompatActivity(), MovieListView, MovieListNavigatio
 
     lateinit var loader: LottieAnimationView
 
+    lateinit var errorView: LottieAnimationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as DemoApplication).appComponent.inject(this)
@@ -39,6 +41,7 @@ class MovieListActivity : AppCompatActivity(), MovieListView, MovieListNavigatio
         val layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         moviesRecycler = findViewById(R.id.movies_recycler)
         loader = findViewById(R.id.lottie_loader)
+        errorView = findViewById(R.id.error_view)
         moviesRecycler.layoutManager = layoutManager
         moviesRecycler.adapter = adapter
         adapter.listener = this
@@ -47,11 +50,6 @@ class MovieListActivity : AppCompatActivity(), MovieListView, MovieListNavigatio
     override fun onResume() {
         super.onResume()
         presenter.onResumed()
-    }
-
-    override fun onPause() {
-        presenter.onPaused()
-        super.onPause()
     }
 
     override fun showLoader() {
@@ -95,5 +93,11 @@ class MovieListActivity : AppCompatActivity(), MovieListView, MovieListNavigatio
     }
 
     override fun showError() {
+        errorView.playAnimation()
+        errorView.visibility = VISIBLE
+    }
+
+    override fun hideError() {
+        errorView.visibility = GONE
     }
 }

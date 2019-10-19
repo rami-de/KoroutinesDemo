@@ -1,17 +1,17 @@
 package com.rami.koroutinesdemo.presentation
 
 import com.rami.koroutinesdemo.domain.interactors.MovieInteractor
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.lang.Exception
+import kotlin.coroutines.CoroutineContext
 
-class MovieListPresenter(private val interactor: MovieInteractor) {
+class MovieListPresenter(private val interactor: MovieInteractor) : CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     private var view: MovieListView? = null
-    private val job = Job()
-    private val scope = CoroutineScope(Dispatchers.Main + job)
+    private var job = Job()
 
     fun setView(view: MovieListView) {
         this.view = view
@@ -24,8 +24,9 @@ class MovieListPresenter(private val interactor: MovieInteractor) {
 
     fun loadMovies() {
         view?.hideMovies()
+        view?.hideError()
         view?.showLoader()
-        scope.launch {
+        launch {
             try {
                 val movies = interactor.getPopularMovies()
                 if (movies.isNotEmpty()) {
@@ -34,13 +35,11 @@ class MovieListPresenter(private val interactor: MovieInteractor) {
                     view?.showMovies()
                 }
             } catch (e: Exception) {
+                view?.hideLoader()
+                view?.hideMovies()
                 view?.showError()
             }
         }
-    }
-
-    fun onPaused() {
-        job.cancel()
     }
 
     fun onMovieItemClicked(movieId: Int) {
